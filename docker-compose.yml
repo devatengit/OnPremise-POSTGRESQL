@@ -1,0 +1,19 @@
+ version: '3.8'
+ networks:
+  devaten-postgresql-agent:
+    name: devaten-postgresql-agent
+    
+ services:
+ 
+   onpremise-postgresqlagent-container:
+     image: devaten/on-premises-postgresql-agent
+     container_name: onpremise-postgresqlagent-container
+     restart: unless-stopped
+     ports:
+       - "8112:8112"
+     environment:
+       - spring.activemq.broker-url=tcp://127.0.0.1:61616
+     volumes:
+       - ./h2:/opt/h2-data:rw
+     networks:
+       - devaten-postgresql-agent
